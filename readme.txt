@@ -1,10 +1,10 @@
 -----jQueryCalculator Fix-----
 
-Original project can be seen at http://code.google.com/p/jquery-calculator/
+Original project by Bo Li can be seen at http://code.google.com/p/jquery-calculator/
 
 This is a fix for the original jQuery calculator project.
 
-jQueryCalculator is an online calculator script coded using JavaScript, HTML, and CSS. The version hosted on the Google Code project was last updated about a year ago, and had a bug since where the period button "." for entering decimal places was not functional. 
+jQueryCalculator is an online calculator script coded using JavaScript, HTML, and CSS. The version hosted on the Google Code project was last updated about a year ago, and had a bug where the period button "." for entering decimal places was not functional. 
 
 jQueryCalculator comes with a logger in which you can see what calculations you have performed in the past. It works by clicking on the buttons themselves, or using the keyboard for input. And it looks pretty damn cool.
 
