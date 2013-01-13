@@ -1,0 +1,115 @@
+.noHighlight {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+div#logSpacer {
+	margin: 0;
+	padding: 0;
+	min-width: 750px;
+	display: block;
+}
+
+div#logWrap {
+	display: none;
+	position: absolute;
+	top: 5px;
+	right: 0;
+	overflow-x: hidden;
+	color: white; 
+	width: 350px; 
+	padding-top: 15px;
+}
+
+div#logger {
+	margin: 0;
+	padding: 0;
+	height: 350px; 
+	overflow-y: scroll; 
+}
+
+div#hoverLogReset {
+	position: absolute;
+	top: 140px;
+	right: -71px;
+	padding: 0;
+	color: #000;
+	font-size: larger;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+div#hoverLogReset span {
+	background: white;
+	padding: 6px 10px 6px 10px;
+	position: relative;
+	top: -18px;
+	left: -6px;
+	visibility: hidden;
+}
+
+img#closeLogger{
+	position: absolute;
+	top: 15px;
+	right: 18px;
+	opacity: 0.3;
+	cursor: pointer;
+}
+
+div#openLogger {
+	position: absolute;
+	bottom: -5px;
+	right: 10px;
+	background: #efefef;
+	border-radius: 5px 5px 0 0;
+	opacity: 0.3;
+	cursor: pointer;
+	display: none;
+}
+
+div#openLogger img { 
+	margin: 5px;
+}
+
+div#links {
+	position: absolute;
+	left: 10px;
+	bottom: -5px;
+	margin: 0
+	padding: 0;
+	background: #efefef;
+	border-radius: 5px 5px 0 0;
+	opacity: 0.3;
+}
+
+div#links div {
+	display: inline;
+	position: relative;
+}
+
+div#links img {
+	width: 32px;
+	height: 32px;
+	padding: 5px 10px;
+	background: #efefef;
+	border-radius: 5px;
+	position: relative;
+}
+
+div#links a {
+	text-decoration: none;
+}
+
+div#links span {
+	position: absolute;
+	top: -60px;
+	padding: 5px;
+	background: #efefef;
+	border-radius: 5px;
+	display: none;
+}

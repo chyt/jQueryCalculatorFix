@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+	<title>jQuery Calculator</title>
+	
+	<link href="../css/calcbluegold/jquery-ui-1.8.18.custom.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script src="../js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+	
+	<script src="../js/keypress.js" type="text/javascript"></script>
+	<script src="../release/js/coreV2.js" type="text/javascript"></script>
+	<script src="../release/js/operation.js" type="text/javascript"></script>
+	
+	<link href="../css/core.css" rel="stylesheet" type="text/css" />
+	
+	<link href="examples.css" rel="stylesheet" type="text/css" />
+	
+</head>
+<body onkeypress="CheckKeyAndApply(event);">
+	<div id="bodyWrap" class="fullHeight">
+	
+		<div id="mainWrap">
+		
+			<h1>jQuery Calculator</h1>
+			<p class="credits">Original code by Bo Li, changes made by Charles Tian</p>
+			
+			<br />
+			
+			<h3>Examples:</h3>
+			
+			<ul id="exampleList">
+				<li class="topMenu">
+					<p id="newWindow" class="easyLink">Open in new window</p>
+				</li>
+				<li class="topMenu">
+					<p id="expandSubMenu">jQueryPopup</p>
+					
+					<ul id="jQueryList">
+						<li class="subMenu">
+							<p id="popup">Popup</p>
+						</li>
+						<li class="subMenu">
+							<p id="draggable">Draggable</p>
+						</li>
+						<li class="subMenu">
+							<p id="modal">Modal</p>
+						</li>
+						<!--
+						<li class="subMenu">
+							<p id="noBorder">No Border</p>
+						</li>
+						-->
+					</ul>
+					
+				</li>
+				<li class="topMenu">
+					<p id="iframe" class="easyLink">IFrame</p>
+				</li>
+				<li class="topMenu">
+					<p id="learn" class="easyLink">Learn to make this</p>
+				</li>
+				<li class="topMenu">
+					<p id="back" class="easyLink">Back to logger example</p>
+				</li>
+				<li class="topMenu">
+					<p class="easyLink">Induce an error</p>
+				</li>
+			<ul>
+			
+			<div id="statusSpacer"></div>
+			<div id="status"><p></p></div>
+			
+		</div>
+		
+	</div>
+	<div id="wrapper"  title="Calculator" class="noHighlight">
+	
+		<div id="calculator" class="noHighlight">
+			<div id="calculatorResult">0.00</div>
+			<ul id="calculatorKeyboard">		
+				<li id="key_1" data-value="1">1</li>
+				<li id="key_2" data-value="2">2</li>
+				<li id="key_3" data-value="3">3</li>
+				<li id="key_plus" data-value="+" class="operator">+</li>
+				
+				<li id="key_4" data-value="4">4</li>
+				<li id="key_5" data-value="5">5</li>
+				<li id="key_6" data-value="6">6</li>
+				<li id="key_minus" data-value="-" class="operator">-</li>
+				
+				<li id="key_7" data-value="7">7</li>
+				<li id="key_8" data-value="8">8</li>
+				<li id="key_9" data-value="9">9</li>
+				<li id="key_multiply" data-value="*" class="operator">*</li>
+				
+				<li id="key_0" data-value="0" class="double">0</li>
+				<li id="key_period" data-value="." class="operator">.</li>			
+				<li id="key_slash" data-value="/" class="operator">/</li>
+				
+				<li id="key_c" data-value="c" class="double summary">C</li>
+				<li id="key_equal" data-value="=" class="double summary">=</li>			
+			</ul>
+		</div>
+		
+	</div>
+	
+	<script type="text/javascript">
+		
+		$(".easyLink").parent().click(function() {
+			var id = $(this).children("p").attr("id");
+			var message = "Unknown error please make an issue on Google Code!";
+			switch (id) {
+				case "newWindow":
+					message = "Opening in a new window...";
+					window.open("../release/index.html", "Calculator", "width=300,height=370");
+					break;
+				case "iframe":
+					message = "Coming soon";
+					showErrorMessage(message);
+					return;
+					break;
+				case "learn":
+					message = "Coming soon";
+					showErrorMessage(message);
+					return;
+					break;
+				case "back":
+					message = "Redirecting back to to main page";
+					showSuccessMessage(message);
+					window.location = "../index.html";
+					break;
+				default:
+					showErrorMessage(message);
+					alert(message);
+					window.open("http://code.google.com/p/jquery-calculator/issues/entry");
+					return;
+			}
+			showSuccessMessage(message);
+		});
+		
+		$("li.subMenu").click(function() {
+			var clickedChildID = $(this).children("p").attr("id");
+			var draggable = false;
+			var message = "Unknown error";
+			var modal = false;
+			if (clickedChildID == "popup") {
+				showCalculatorDialog(draggable);
+				showSuccessMessage();
+			}
+			else if (clickedChildID == "draggable") {
+				draggable = true;
+				message = "Popping up calculator that's draggable";
+			}
+			else if (clickedChildID == "modal") {
+				modal = true;
+				message = "Showing modal calculator";
+			}
+			else {
+				showErrorMessage("This feature is currently not available");
+				return;
+			}
+			showSuccessMessage(message);
+			showCalculatorDialog(draggable, modal);
+		});
+	
+		$("iframe");
+		
+		var isExpand = false;
+		var isExpandListClicked = false;
+		
+		$("li.topMenu").hover(
+			function() {
+				isExpandLink = ($(this).children("p").attr("id") == "expandSubMenu");
+				$(this).stop().animate({
+					left: '20px'
+				});
+			},
+			function() {
+				if (!isExpandListClicked || !isExpandLink) {
+					$(this).stop().animate({
+						left: '0px'
+					});
+				}
+			}
+		).toggle(
+			function() {
+				if (isExpandLink) {
+					$("#jQueryList").show();
+					isExpandListClicked = true;
+				}
+			},
+			function() {
+				if (isExpandLink) {
+					$("#jQueryList").hide('slow');
+					isExpandListClicked = false;
+				}
+			}
+		);
+		
+		$("li.subMenu").hover(
+			function() {
+				$(this).stop().animate({
+					left: '20px'
+				});
+			},
+			function() {
+				$(this).stop().animate({
+					left: '0px'
+				});
+			}
+		);
+		
+		function showErrorMessage(message) {
+			$("#status").stop().hide();
+			$("#status").removeClass("success")
+			$("#status").addClass("error");;
+			$("#status p").text(message);
+			$("#status").stop().fadeIn().delay(500).fadeOut(2000);
+		}
+		
+		function showSuccessMessage(message) {
+			$("#status").stop().hide();
+			$("#status").removeClass("error");
+			$("#status").addClass("success");
+			$("#status p").text(message);
+			$("#status").stop().fadeIn().delay(500).fadeOut(2000);
+		}
+		
+		function showCalculatorDialog(draggable, modal) {
+			$("#wrapper").dialog({
+				width: 351,
+				height: 402,
+				resizable: false,
+				draggable: draggable,
+				modal: modal
+			});
+		}
+	</script>
+</body>
+</html>
